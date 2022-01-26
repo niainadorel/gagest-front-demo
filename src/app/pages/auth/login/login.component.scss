@@ -1,0 +1,28 @@
+.text-right{
+    margin-top: 25px;
+}
+.background {
+    position: relative;
+}
+.form-container{
+    display: flex;
+    min-width: 792px!important;
+    padding: 0!important;
+}
+.mask{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #82c2ffc7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img{
+        width: 145px!important;
+        height: 115px!important;
+        filter: none!important;  
+    }
+}

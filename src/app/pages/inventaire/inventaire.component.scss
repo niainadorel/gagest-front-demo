@@ -1,0 +1,83 @@
+.container-fluid{
+    min-height: calc(100vh - 200px);
+}
+
+.col-sp-left{
+    width: 220px;
+    button{
+        margin-bottom: 20px;
+    }
+}
+.col-sp-right{
+    width: calc(100% - 220px);
+    padding-left: 20px;
+
+    .row{
+        margin-left: 0!important;
+        margin-right: 0!important;
+    }
+}
+.col-sp-card{
+    width: 33.33333%;
+}
+
+button[nbButton]{
+    margin: 0 8px;
+    top: -1px;
+    padding: 7px 10px !important;
+    position: relative;
+}
+
+::ng-deep nb-checkbox *{
+    cursor: pointer;
+}
+::ng-deep nb-spinner{
+    background-color: rgb(237, 241, 247)!important;
+    span{
+        width: 100px!important;
+        height: 100px!important;
+        border-width: 0.225em!important;
+    }
+}
+::ng-deep .loading-indicator nb-spinner{
+    background-color: white!important;
+    span{
+        width: 40px!important;
+        height: 40px!important;
+        border-width: 0.125em!important;
+    }
+}
+ngx-datatable{
+
+    img{
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+    }
+    button.icon-only{
+        width: 60px;
+        color: #555;
+        border: none;
+        background: white;
+        border: 1px solid #ececec;
+        border-radius: 3px;
+        height: 32px;
+    }
+}
+
+
+
+
+
+::ng-deep .ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{
+    padding: 0 1.2rem!important;
+    line-height: 50px;
+    border-bottom: 1px solid #ececec;
+}
+::ng-deep {
+    .ngx-datatable.material {
+      background: #fff;
+      box-shadow: 0 5px 15px 0 #d8d8d8!important;
+      border-radius: 3px!important;
+    } 
+}

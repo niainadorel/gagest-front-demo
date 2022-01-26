@@ -1,0 +1,256 @@
+<button class="outline-btn" (click)="inAdd = !inAdd"> Créer une nouvelle sortie</button>
+<div *ngIf="inAdd" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="xlarge">
+  <div class="form-container">
+    <div class="container-fluid">
+      <div class="row m-b-20px">
+        <div class="col-6">
+          <form [formGroup]="sortieForm" *ngIf="suggestionData">
+            <div class="relative form-field" *ngIf="user && user.typeAccount > 1">
+              <label>Client</label>
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="suggestionData" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                  (inputChanged)='onChangeSearch($event)' [itemTemplate]="itemTemplate"
+                  [notFoundTemplate]="notFoundTemplate" formControlName="client">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                  <div class="flex suggestion-container">
+                    <img [src]="item.img" alt="">
+                    <div class="user-name" [innerHTML]="item.name"></div>
+                  </div>
+                </ng-template>
+
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="'Introuvable dans la base'"></div>
+                </ng-template>
+              </div>
+            </div>
+            <div class="relative form-field" *ngIf="user && user.typeAccount === 1">
+              <label>Client</label>
+              <input type="text" formControlName="client" nbInput fullWidth fieldSize="large" placeholder=".........">
+            </div>
+            <div class="relative form-field">
+              <label>TVA %</label>
+              <input type="text" formControlName="tva" nbInput fullWidth fieldSize="large" placeholder="........."
+                (keyup)="ajustTotalPrice()">
+            </div>
+          </form>
+
+        </div>
+        <div class="col-6">
+          <div class="card-sidebar-body" *ngIf="items">
+            <div class="achat-item" *ngFor="let item of items">
+              <div class="achat-item-header">
+                <img [src]="item.product.img ? item.product.img : '/assets/imgs/logo.png'" alt="pic">
+                <div class="product-name">{{item.product.title}} <br>
+                  <span class="text-lighter">Prix : </span> {{ item.product.sell_price }} Ar
+                </div>
+                <div class="price"><span class="text-lighter">Prix Total : </span>
+                  {{ item.product.sell_price * item.quantity }}
+                  Ar <br>
+                  <span class="text-lighter">En stock : </span> {{item.product.quantity}} {{item.product.unit}}
+                </div>
+              </div>
+              <div class="achat-item-footer">
+                <div class="left-part">
+                  <div class="label">Quantité en {{ item.product.unit }}</div>
+                  <button class="minus-btn" [disabled]="item.quantity <= 1"
+                    (click)="decrementQty(item.product._id)">-</button>
+                  <span class="qtt"><input class="qty-input" type="number" min="1" [value]="item.quantity"
+                      (keyup)="updateValue($event.target, item.product._id, item.product.quantity)"></span>
+                  <button class="plus-btn" (click)="incrementQty(item.product._id, item.product.quantity)">+</button>
+
+                  <div class="relative form-field">
+                    <div class="label">Remise %</div>
+                    <input type="text" [(ngModel)]="item.remise" nbInput fullWidth fieldSize="large"
+                      placeholder="........." (keyup)="ajustTotalPrice()">
+                  </div>
+                </div>
+                <div class="right-part" (click)="deleteItem(item.product._id)">
+                  <nb-icon icon="trash-outline"></nb-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-sidebar-footer">
+            <div class="total">Total HT: {{ cartTotalPrice }} Ar</div>
+            <div class="total">Total TTC: {{ cartTotalPriceWithTax }} Ar</div>
+          </div>
+          <button nbButton status="basic" class="d-block m-auto" (click)="openSortieDialog()">+ Ajouter un
+            produit</button>
+
+        </div>
+      </div>
+    </div>
+    <button nbButton status="primary" class="d-block m-auto" (click)="saveSortie()"
+      [disabled]="cartTotalPrice === 0 || !sortieForm.valid">
+      <nb-icon icon="checkmark-circle-outline"></nb-icon> Terminer
+    </button>
+
+  </div>
+
+</div>
+<div class="container-fluid" *ngIf="!inAdd">
+  <div class="row">
+    <div class="col-12">
+      <div class="pretty-search">
+        <div class="icon-container">
+          <nb-icon icon="search-outline"></nb-icon>
+        </div>
+        <input type="text" placeholder="Rechercher..." (keyup)="updateFilter($event)">
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-datatable #sortieTable class="material" [rows]="rows" [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50"
+  [rowHeight]="50" [sorts]="sorts" [class.show]="isSidebarShown" [nbSpinner]="loading" nbSpinnerStatus="primary"
+  nbSpinnerSize="xlarge" *ngIf="!inAdd">
+  <ngx-datatable-column name="Nom du client" prop="clientName" [flexGrow]="4">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <strong *ngIf="row.client && row.client.name">{{row.client.name}}</strong>
+      <strong *ngIf="row.client && !row.client.name">{{row.client }}</strong>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Prix total HT" prop="totalPrice" [flexGrow]="3">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <strong>{{row.totalPrice}} Ar</strong>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="TVA" prop="tva" [flexGrow]="2">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <strong>{{row.tva}} %</strong>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Prix total TTC" prop="totalPriceWithTax" [flexGrow]="3">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <strong>{{row.totalPrice + (row.totalPrice * row.tva / 100)}} Ar</strong>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Date d'ajout" prop="addDate" [flexGrow]="3">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <strong>{{row.addDate | date: "dd-MM-yyyy"}} {{ row.addDate}}</strong>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Facture" [flexGrow]="3" *ngIf="user.typeAccount > 1">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <button class="down-button" (click)="getPdf(row)">
+        <nb-icon icon="file-outline"></nb-icon>
+      </button>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+
+<div class="isoler">
+  <div class="facture-container" id="facture" *ngIf="toPrint && user && user.name && user.typeAccount > 1">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-7">
+          <div class="text-bold" *ngIf="toPrint.client && toPrint.client.name">
+            {{ toPrint.client.name}}
+          </div>
+          <div *ngIf="toPrint.client.address">
+            {{ toPrint.client.address }}
+          </div>
+
+          <div *ngIf="toPrint.client.NIF && toPrint.client.STAT">
+            NIF : {{ user.NIF}} - STAT : {{user.STAT}}
+          </div>
+          <div *ngIf="toPrint.client.email">
+            Email : {{ toPrint.client.email }}
+          </div>
+          <div *ngIf="toPrint.client.phoneNumber">
+            Tel : {{ toPrint.client.phoneNumber }}
+          </div>
+        </div>
+        <div class="col-5 text-right">
+          <div class="text-bold">
+            {{ user.name }}
+          </div>
+          <div>
+            {{ user.address }}
+          </div>
+          <div *ngIf="user.NIF && user.STAT">
+            NIF : {{ user.NIF}} - STAT : {{user.STAT}}
+          </div>
+          <div>
+            Email : {{user.email}}
+          </div>
+          <div class="">
+            Tel : {{ user.phoneNumber }}
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="divider"></div>
+          <table class="text-right m-l-auto">
+            <tr>
+              <td>
+                <div class="text-bold">Date de facture :</div>
+              </td>
+              <td>{{ toPrint.addDate | date: "dd/MM/yyyy"}}</td>
+            </tr>
+            <!-- <tr>
+              <td>
+                <div class="text-bold">Date d'écheance :</div>
+              </td>
+              <td>{{ toPrint.dateEcheance | date: "dd/MM/yyyy"}}</td>
+            </tr> -->
+            <tr>
+              <td>
+                <div class="text-bold">Montant dû:</div>
+              </td>
+              <td>{{ toPrint.totalPrice }}.00 Ar</td>
+            </tr>
+            <!-- <tr>            
+              <td class="text-bold">Mode de paiement</td>
+              <td>{{ toPrint.paymentMode }}</td>
+            </tr> -->
+          </table>
+          <div class="divider"></div>
+          <div class="text-xl">
+            Facture n° {{toPrint._id }}
+          </div>
+
+          <table class="full-width">
+            <tr class="text-bold text-right">
+              <th style="text-align: left !important">Article</th>
+              <th>Quantité</th>
+              <th style="width: 125px">Prix</th>
+              <th style="width: 100px">Remise</th>
+              <th style="width: 150px">Total HT</th>
+            </tr>
+            <tr *ngFor="let product of toPrint.products">
+              <td>{{product.product.title}}</td>
+              <td class="text-right">{{product.quantity}}</td>
+              <td class="text-right">{{product.product.sell_price}}.00 Ar</td>
+              <td class="text-right">{{product.remise}} %</td>
+              <td class="text-right">{{ (product.product.sell_price - product.product.sell_price*(product.remise / 100))
+                * product.quantity}}.00 Ar</td>
+            </tr>
+            <tr class="text-bold">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="text-right">Total HT:</td>
+              <td class="text-right">{{ toPrint.totalPrice }}.00 Ar</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="text-right">TVA</td>
+              <td class="text-right">{{toPrint.tva}}%</td>
+            </tr>
+            <tr class="text-bold">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="text-right">Total TTC</td>
+              <td class="text-right">{{ toPrint.totalPrice + (toPrint.totalPrice * toPrint.tva / 100) }}.00 Ar</td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="i-modal">
+    <div class="i-modal-header" *ngIf="data && !data.edit">
+        + Ajout Client
+    </div>
+    <div class="i-modal-header" *ngIf="data && data.edit">
+        <nb-icon icon="edit-outline"></nb-icon> Modification Client
+    </div>
+    <div class="i-modal-body">
+        <form [formGroup]="clientsForm">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6">
+                        <label>Logo</label>
+                        <div class="picture-container">
+                            <div class="relative">
+                                <img *ngIf="imageSelected === true" [src]="imgSrc" alt="">
+                                <div class="mask" *ngIf="!imageSelected"></div>
+                                <nb-icon icon="camera-outline" *ngIf="imageSelected === false"></nb-icon>
+                                <input type="file" (change)="fileChange($event)">
+                            </div>
+                        </div>
+                        <div class="relative form-field">
+                            <label>Nom de l'entreprise</label>
+                            <input type="text" formControlName="name" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label>Adresse</label>
+                            <input type="text" formControlName="address" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label>Email</label>
+                            <input type="email" formControlName="email" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label>Tel</label>
+                            <input type="text" formControlName="phoneNumber" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label>Site web</label>
+                            <input type="text" formControlName="website" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+
+                    </div>
+                    <div class="col-6">
+                        <div class="relative form-field">
+                            <label>NIF</label>
+                            <input type="text" formControlName="NIF" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label>STAT</label>
+                            <input type="text" formControlName="STAT" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label>RCS</label>
+                            <input type="text" formControlName="RCS" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label>Nom du responsable</label>
+                            <input type="text" formControlName="responsable" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <div class="divider"></div>
+                        </div>
+                        <div class="relative form-field">
+                            <label>Identifiant pour la connexion</label>
+                            <input type="text" formControlName="username" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label>Mot de passe</label>
+                            <input type="pasword" formControlName="password" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="i-modal-footer" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="xlarge">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6 text-center">
+                    <button nbButton status="danger" (click)="close()">Annuler</button>
+                </div>
+                <div class="col-6 text-center">
+                    <button nbButton status="primary" (click)="save()"
+                        [disabled]="!clientsForm.valid || !imgSrc">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

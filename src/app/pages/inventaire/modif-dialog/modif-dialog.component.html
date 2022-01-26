@@ -1,0 +1,43 @@
+<div class="i-modal">
+    <div class="i-modal-header">
+        Quantité réelle en stock 
+    </div>
+    <div class="i-modal-body">
+        <form [formGroup]="productsForm">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="relative form-field">
+                            <label for="">Quantité réelle</label>
+                            <input type="number" formControlName="quantity" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label for="">Modifié par :</label>
+                            <input type="text" formControlName="modifier" nbInput fullWidth fieldSize="large"
+                                placeholder="Votre nom">
+                        </div>
+                        <div class="relative form-field">
+                            <label for="">Cause qui aurait pu engendrer la différence </label>
+                            <input type="text" formControlName="changementCause" nbInput fullWidth fieldSize="large"
+                                placeholder="Ex: Produits défectueux">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="i-modal-footer" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="xlarge">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6 text-center">
+                    <button nbButton status="danger" (click)="close()">Annuler</button>
+                </div>
+                <div class="col-6 text-center">
+                    <button nbButton status="primary" (click)="save()"
+                        [disabled]="!productsForm.valid">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

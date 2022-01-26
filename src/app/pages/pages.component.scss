@@ -1,0 +1,33 @@
+.logo img{
+    height: 45px;
+    width: auto;
+    margin-left: 20px;
+}
+
+.m-l-auto{
+    margin-left: auto;
+}
+::ng-deep nb-menu{
+    .menu-item a.active{
+        background: rgba(174, 216, 221, 0.32)!important;
+    }
+    .menu-item a.active::before{
+        content: "" !important;
+        width: 2px !important;
+        height: 23px !important;
+        background-color: currentColor !important;
+        display: block !important;
+        margin-right: 9px;
+        border-radius: 2px!important;
+    }
+}
+nb-toggle{
+    margin-left: 25px;
+    margin-top: 5px;
+    transform: scale(.9);
+}
+::ng-deep .dark{
+    nb-toggle .text{
+        color:white!important;
+    }
+}

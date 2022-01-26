@@ -1,0 +1,68 @@
+<div class="container-fluid" [nbSpinner]="loading || !categories || !rows" nbSpinnerStatus="primary"
+    nbSpinnerSize="xlarge">
+    <div class="row">
+        <div class="col-sp-left">
+            <nb-card *ngIf="categories">
+                <nb-card-header>Filter par catégorie</nb-card-header>
+                <nb-card-body>
+                    <nb-radio-group [(ngModel)]="category" (valueChange)="filterByCategories($event)">
+                        <nb-radio value="all">Toutes catégories</nb-radio>
+                        <nb-radio *ngFor="let option of categories" [value]="option">{{ option }}</nb-radio>
+                    </nb-radio-group>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-sp-right">
+            <div class="pretty-search">
+                <div class="icon-container">
+                    <nb-icon icon="search-outline" (click)="filterProducts()"></nb-icon>
+                </div>
+                <input type="text" placeholder="Filtrer..." (keyup)="updateFilter($event)">
+            </div>
+            <ngx-datatable #productTable class="material" [rows]="rows" [columnMode]="'flex'" [headerHeight]="50"
+                [footerHeight]="50" [rowHeight]="50" [sorts]="sorts" [limit]="10" [class.show]="isSidebarShown"
+                [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="xlarge">
+                <ngx-datatable-column name="Image" prop="img" [flexGrow]="2">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <img [src]="row.img ? row.img : '/assets/imgs/logo.png'" alt="">
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Nom du produit" prop="title" [flexGrow]="3">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <strong>{{row.title}}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Dernière controle" prop="lastCheck" [flexGrow]="3">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ fromNow(row.lastCheck) }}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Quantité" prop="quantity" [flexGrow]="3">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <strong>{{ row.quantity}} {{ row.unit }}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Modifié par" [flexGrow]="3">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <strong>{{ row.modifier || '-'}}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Cause" [flexGrow]="3">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span>{{ row.modificationCause || '-'}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Valider - Editer" prop="quantity" [flexGrow]="4">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button nbButton status="success" (click)="validateProduct(row._id, row.globalId)">
+                            <nb-icon icon="checkmark-outline"></nb-icon>
+                        </button>
+                        <button nbButton status="danger" (click)="showEditInput(row, row.globalId)">
+                            <nb-icon icon="edit-outline"></nb-icon>
+                        </button>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div>
+</div>

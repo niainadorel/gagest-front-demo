@@ -1,0 +1,54 @@
+<!-- <div class="notif-container">
+    <div class="notif-item" *ngFor="let notif of notifications"  [class.textbold]="!notif.seen"  (click)="goToCommande(notif._id, notif.content.id)">
+        <div class="left-side">
+            <img [src]="notif.content.img" alt="">
+        </div>
+        <div class="middle-side">
+            <div class="title">{{notif.content.title}}</div>
+            <div class="sub-title">{{ fromNow(notif.addDate)}}</div>
+        </div>
+    </div>
+</div> -->
+<nb-card *ngIf="notifications && notifications.length">
+    <nb-card-body>
+  
+      <nb-tabset>
+        <nb-tab tabTitle="Commandes"
+                [badgeText]="commandesNotif.length"
+                badgeStatus="success">
+            <div class="notif-item" *ngFor="let notif of commandesNotif"  [class.textbold]="!notif.seen"  (click)="goToCommande(notif._id, notif.content.id)">
+                <div class="left-side">
+                    <img [src]="notif.content.img" alt="">
+                </div>
+                <div class="middle-side">
+                    <div class="title">{{notif.content.title}}</div>
+                    <div class="sub-title">{{ fromNow(notif.addDate)}}</div>
+                </div>
+            </div>
+        </nb-tab>
+        <nb-tab tabTitle="Alerte"
+                [badgeText]="alertNotif.length"
+                badgeStatus="warning">
+                <div class="notif-item" *ngFor="let notif of alertNotif"  [class.textbold]="!notif.seen" (click)="goToDetailProduct(notif._id)">
+                    <div class="left-side">
+                        <img [src]="notif.img" alt="">
+                    </div>
+                    <div class="middle-side">
+                        <div class="title">{{notif.title}}, stock d'alerte atteint</div>
+                    </div>
+                </div>        </nb-tab>
+        <nb-tab tabTitle="Danger "
+                [badgeText]="dangerNotif.length"
+                badgeStatus="danger">
+                <div class="notif-item" *ngFor="let notif of dangerNotif"  [class.textbold]="!notif.seen" (click)="goToDetailProduct(notif._id)">
+                    <div class="left-side">
+                        <img [src]="notif.img" alt="">
+                    </div>
+                    <div class="middle-side">
+                        <div class="title">{{ notif.title }}, stock minimum atteint</div>
+                    </div>
+                </div>          </nb-tab>
+      </nb-tabset>
+  
+    </nb-card-body>
+  </nb-card>

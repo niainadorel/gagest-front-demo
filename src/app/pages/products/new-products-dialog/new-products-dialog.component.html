@@ -1,0 +1,139 @@
+<div class="i-modal">
+    <div class="i-modal-header" *ngIf="data && !data.edit">
+        + Ajout Produit
+    </div>
+    <div class="i-modal-header" *ngIf="data && data.edit">
+        <nb-icon icon="edit-outline"></nb-icon> Modification Produit
+    </div>
+    <div class="i-modal-body">
+        <form [formGroup]="productsForm">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="relative form-field">
+                            <label>Nom du produit</label>
+                            <input type="text" formControlName="title" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field" *ngIf="!newCategorie">
+                            <div><label>Catégorie du produit</label> <span  *ngIf="data && !data.edit">|</span> <label class="text-blue" (click)="newCategorie = true"  *ngIf="data && !data.edit">Créer une nouvelle catégorie</label></div>
+                            <select aria-placeholder="Sélectionner la catégorie" formControlName="category" nbInput fullWidth fieldSize="large">
+                                
+                                <option *ngFor="let category of myCategories" [value]="category">{{category}}</option>
+                            </select>
+                        </div>
+                        <div class="relative form-field" *ngIf="newCategorie">
+                            <div><label>Catégorie du produit</label> | <label class="text-blue" (click)="newCategorie = false">Choisir parmis les catégories existants</label></div>
+                            <input type="text" placeholder="Nouvelle catégorie" nbInput fullWidth formControlName="category">
+                        </div>
+                        <div class="relative form-field">
+                            <label>Description du produit</label>
+                            <textarea name="" formControlName="description" nbInput fullWidth fieldSize="large"
+                                placeholder="........."></textarea>
+                        </div>
+                        <div class="relative form-field">
+                            <label>Fournisseur</label>
+                            <div class="ng-autocomplete" *ngIf="data">
+                                <ng-autocomplete [data]="data.suggestionData" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                                  (inputChanged)='onChangeSearch($event)' [itemTemplate]="itemTemplate"
+                                  [notFoundTemplate]="notFoundTemplate" formControlName="fournisseur">
+                                </ng-autocomplete>
+                
+                                <ng-template #itemTemplate let-item>
+                                  <div class="flex suggestion-container">
+                                    <div class="user-name" [innerHTML]="item.name"></div>
+                                  </div>
+                                </ng-template>
+                
+                                <ng-template #notFoundTemplate let-notFound>
+                                  <div [innerHTML]="'Introuvable dans la base'"></div>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="relative form-field">
+                            <label for="">Quantité</label>
+                            <input type="number" formControlName="quantity" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label for="">Unité (Exemple : Kg)</label>
+                            <input type="text" formControlName="unit" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label for="">Prix d'achat (unitaire)</label>
+                            <input type="number" formControlName="bought_price" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label for="">Prix de vente (unitaire)</label>
+                            <input type="number" formControlName="sell_price" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <!-- <div class="relative form-field">
+                            <label for="">Prix minimumm de vente (unitaire)</label>
+                            <input type="number" formControlName="minimum_sell_price" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label for="">Prix de gros (unitaire)</label>
+                            <input type="number" formControlName="big_quantity_price" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div> -->
+                        
+                        <div class="relative form-field">
+                            <label for="">Stock d'alerte</label>
+                            <input type="number" formControlName="stockDAlert" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label for="">Stock minimum</label>
+                            <input type="number" formControlName="stockMinimum" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        
+                        <div class="relative form-field">
+                            <label for="">Stock maximum</label>
+                            <input type="number" formControlName="stockMaximum" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field">
+                            <label for="" nbTooltipStatus="primary">Réference du produit</label>
+                            <input type="text" formControlName="reference" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="relative form-field" *ngIf="data && data.edit">
+                            <label for="" nbTooltipStatus="primary">Valeur Code barres</label>
+                            <input type="text" formControlName="barcode" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                        <div class="picture-container">
+                            <div class="relative">
+                                <img [src]="imgSrc" alt="" *ngIf="imgSrc">
+                                <div class="mask" *ngIf="imgSrc === ''"></div>
+                                <nb-icon icon="camera-outline" *ngIf="imgSrc === ''"></nb-icon>
+                                <input type="file" (change)="fileChange($event)">
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="i-modal-footer" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="xlarge">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6 text-center">
+                    <button nbButton status="danger" (click)="close()">Annuler</button>
+                </div>
+                <div class="col-6 text-center">
+                    <button nbButton status="primary" (click)="save()"
+                        [disabled]="!productsForm.valid || !imgSrc">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

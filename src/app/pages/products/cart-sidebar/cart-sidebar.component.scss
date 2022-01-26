@@ -1,0 +1,134 @@
+.card-sidebar-container{
+    position: fixed;
+    top: 76px;
+    right: -400px;
+    z-index: 999;
+    background: white;
+    width: 400px;
+    height: calc(100vh - 136px);
+    max-height: calc(100vh - 136px);
+    box-shadow: 0 -14px 15px 1px #d0d0d0;
+    padding: 20px;
+    transition: .3s;
+
+    .card-sidebar-header{
+        line-height: 48px;
+        margin-bottom: 20px;
+        color: rgb(88, 16, 16);
+        text-align: center;
+        font-size: 1.4em;
+
+        button.close{
+            float: left;
+        }
+    }
+    .card-sidebar-body{
+        max-height: calc(100% - 175px);
+        overflow-y: auto;
+    }
+    .achat-item{
+        border-bottom: 1px solid #bfbfbf;
+        padding: 15px 0;
+
+        .achat-item-header{
+            display: flex;
+            align-items: center;
+            margin-bottom: 9px;
+
+            img{
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                border: 1px solid #ececec;
+                border-radius: 50%;
+                margin-right: 15px;
+            }
+            .product-name{
+                width: calc(100% - 165px);
+                font-weight: bold;
+            }
+            .price{
+                font-size: 1.1em;
+                font-weight: bold;
+            }
+
+        }
+        .achat-item-footer{
+            display: flex;
+
+            .left-part{
+                padding-left: 15px;
+                width: calc(100% - 100px);
+
+                .label{
+                    margin-bottom: 6px;
+                }
+                button{
+                    border: 1px solid #bfbfbf;
+                    color: #222;
+                    background: white;
+                    font-size: 1.5em;
+                    width: 35px;
+                    height: 35px;
+                    border-radius: 3px;
+                }
+                .qtt{
+                    margin: 0 16px;
+                    font-weight: bold;
+                    font-size: 1.4em;
+                }
+            }
+            .right-part{
+                width: 100px;
+                text-align: center;
+                color: red;
+                line-height: 57px;
+                background: rgba(255, 173, 173, 0.4);
+                border-radius: 5px;
+                cursor: pointer;        
+            }
+        }
+    }
+
+    .outline-btn{
+        background: white;
+        border: 1px solid deepskyblue;
+        padding: 12px 29px;
+        border-radius: 4px;
+        color: deepskyblue;
+        font-weight: 600;
+        cursor: pointer;
+        margin: auto;
+        display: block;
+    }
+    
+    .outline-btn:hover{
+        background: deepskyblue;
+        color: white;
+    }
+    .outline-btn:disabled{
+        color: white!important;
+        cursor: not-allowed!important;
+        border-color: none!important;
+    }
+    .card-sidebar-footer{
+        padding: 20px 0;
+        .total{
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+    }
+}
+.card-sidebar-container.show{
+    right: 0px;
+}
+
+::ng-deep nb-spinner{
+    background-color: rgb(237, 241, 247)!important;
+    span{
+        width: 100px!important;
+        height: 100px!important;
+        border-width: 0.225em!important;
+    }
+}

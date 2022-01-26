@@ -1,0 +1,45 @@
+.i-modal{
+    min-width: 900px;
+    max-width: 95vw;
+    max-height: 95vh;
+    overflow-y: auto;
+    background: #f1f3f8;
+    padding: 50px;
+}
+
+.card-item{
+    display: flex;
+    background: white;
+    padding: 10px;
+    border-radius: 7px;
+    align-items: center;
+    margin: 10px 6px;
+    font-size: 1.2em;
+    transform: scale(.9);
+
+    img{
+        width: 75px;
+        height: 75px;
+        object-fit: cover;
+    }
+
+    .product-name{
+        width: 170px;
+        padding-left: 10px;
+    }
+
+    button{
+        line-height: 48px;
+        margin: 0 15px;
+        display: block;
+        background: deepskyblue;
+        color: white;
+        border: none;
+        padding: 0 30px;
+        border-radius: 24px;
+    }
+
+    .count{
+        width: 150px;
+    }
+}

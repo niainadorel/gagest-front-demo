@@ -1,0 +1,111 @@
+ngx-datatable{
+
+    img{
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+    }
+    button.icon-only{
+        width: 60px;
+        color: #555;
+        border: none;
+        background: white;
+        border: 1px solid #ececec;
+        border-radius: 3px;
+        height: 32px;
+    }
+    select{
+        line-height: 35px;
+        height: 35px;
+        border-radius: 5px;
+        padding: 0 4px;
+        outline: none;
+    }
+}
+select.enabled{
+    color: var(--boba-secondary-color);
+    border-color: var(--boba-secondary-color);
+}
+select.enabled{
+    color: var(--boba-primary-color);
+    border-color: var(--boba-primary-color);
+}
+
+.user-details-card{
+    background-color: white;
+    .card-header{
+        display: flex;
+        background-color: white;
+        .left-part{
+            img{
+                width: 100px;
+                max-height: 100px;
+                object-fit: cover;
+            }
+    
+            .status{
+                line-height: 40px;
+                border: none;
+                margin: 10px;
+                text-align: center;
+                border-radius: 4px;
+                color: white;
+            }
+            .status.danger{
+                background-color: var(--danger);
+            }
+        }
+        .right-part{
+            padding-left: 15px;
+            width: calc(100% - 100px);
+            h4{
+                font-size: 1.1em;
+                font-weight: 500;
+                margin: 0;
+            }
+        }
+    }
+    .card-body{
+        padding: 0!important;
+        padding-bottom: 20px!important;
+        .list-item{
+            line-height: 20px;
+            font-size: 1em;
+            border-bottom: 1px solid #ececec;
+            padding: 6px 20px;
+        }
+        .account-info{
+            margin: 20px 20px 0px;
+            background-color: var(--teal);
+            color: white;
+            border-radius: 5px;
+            font-size: 1.1em;
+
+            .list-item{
+                display: flex;
+                justify-content: space-between;
+                border-bottom: none;
+            }
+            label{
+                margin: 0;
+            }
+            .value{
+                padding-left: 30px;
+            }
+        }
+    }
+}
+
+
+::ng-deep .ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{
+    padding: 0 1.2rem!important;
+    line-height: 50px;
+    border-bottom: 1px solid #ececec;
+}
+::ng-deep {
+    .ngx-datatable.material {
+      background: #fff;
+      box-shadow: 0 5px 15px 0 #d8d8d8!important;
+      border-radius: 3px!important;
+    } 
+}

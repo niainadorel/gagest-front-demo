@@ -1,0 +1,96 @@
+.container-fluid{
+    display: flex;
+    min-height: 100vh;
+    background-color: #045de9;
+    background-image: linear-gradient(315deg, #045de9 0%, #09c6f9 74%);
+    align-items: center;
+    justify-content: center;
+
+    .background {
+        width: 310px;
+        min-width: 310px;
+
+        img{
+            width: 100%;
+            height: 100%;
+            filter: blur(1px);
+            object-fit: cover;
+        }
+    }
+    .form-container{
+        background: white;
+        width: calc(100% - 40px);
+        max-width: 600px;
+        margin: 20px auto 50px;
+        box-shadow: 0px 6px 14px 2px #00000024;
+        transform: scale(0.9);
+        border-radius: 5px;
+        overflow: hidden;
+        padding: 2em;
+
+
+        .forms-content {
+            min-width: calc(100% - 310px);
+            padding: 2em;
+        }
+        h2{
+            text-align: center;
+            margin-bottom: 29px;
+            font-weight: lighter;
+        }
+        .form-group{
+            margin: 15px auto;
+
+            label{
+                display: block;
+                font-size: 18px;
+            }
+            input{
+                line-height: 48px;
+                width: 100%;
+                display: block;
+                border: 1px solid #ececec;
+                padding: 0 25px;
+                border-radius: 4px;
+            }
+
+            button[type="submit"]{
+                display: block;
+                margin: auto;
+                padding: 10px 30px;
+                text-transform: uppercase;
+                font-weight: 600;
+                color: white;
+                background: deepskyblue;
+                border: 0;
+                line-height: 38px;
+                border-radius: 3px;
+                margin-top: 50px;
+            }
+            button[disabled]{
+                background: #c7c7c7 !important;
+                cursor: not-allowed;
+            }
+        }
+        ul{
+            font-style: italic;
+        }
+        .ng-touched.ng-invalid{
+            border-color: #fb7a7a !important;
+        }
+        .sublabel{
+            font-size: 15px !important;
+            text-align: right;
+            font-style: italic;
+        }
+        .form-error{
+            color: red;
+        }
+    }
+}
+.m-t-50{
+    margin-top: 50px;
+}
+input{
+    font-weight: bold;
+}

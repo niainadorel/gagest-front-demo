@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <button nbButton status="primary" (click)="openNewFournisseurDialog()">+ Nouveau fournisseur</button>
+                    </div>
+                    <div class="col-8">
+                        <div class="pretty-search">
+                            <div class="icon-container">
+                                <nb-icon icon="search-outline"></nb-icon>
+                            </div>
+                            <input type="text" name="" id="searchInput" placeholder="Filter..." (keyup)="updateFilter($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ngx-datatable #fournisseurTable class="material" [rows]="rows" [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50"
+                [rowHeight]="50" [sorts]="sorts" [limit]="10" [class.show]="isSidebarShown" [nbSpinner]="loading"
+                nbSpinnerStatus="primary" nbSpinnerSize="xlarge">
+                
+                <ngx-datatable-column name="Nom de l'entreprise" prop="name" [flexGrow]="8">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <strong>{{row.name}}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                
+                <ngx-datatable-column name="Editer" [flexGrow]="1">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button class="icon-only" (click)="openEditFournisseurDialog(row, row.globalId)">
+                            <nb-icon icon="edit-outline"></nb-icon>
+                        </button>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div>
+</div>

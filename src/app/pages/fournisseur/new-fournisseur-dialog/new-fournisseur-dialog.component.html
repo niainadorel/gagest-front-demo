@@ -1,0 +1,36 @@
+<div class="i-modal">
+    <div class="i-modal-header" *ngIf="data && !data.edit">
+        + Ajout Fournisseur
+    </div>
+    <div class="i-modal-header" *ngIf="data && data.edit">
+        <nb-icon icon="edit-outline"></nb-icon> Modification Fournisseur
+    </div>
+    <div class="i-modal-body">
+        <form [formGroup]="fournisseursForm">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="relative form-field">
+                            <label>Nom de l'entreprise</label>
+                            <input type="text" formControlName="name" nbInput fullWidth fieldSize="large"
+                                placeholder=".........">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="i-modal-footer" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="xlarge">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6 text-center">
+                    <button nbButton status="danger" (click)="close()">Annuler</button>
+                </div>
+                <div class="col-6 text-center">
+                    <button nbButton status="primary" (click)="save()"
+                        [disabled]="!fournisseursForm.valid">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

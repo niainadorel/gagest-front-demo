@@ -1,0 +1,242 @@
+.form-container{
+
+    .achat-item{
+        border-bottom: 1px solid #bfbfbf;
+        padding: 15px 0;
+
+        .achat-item-header{
+            display: flex;
+            align-items: center;
+            margin-bottom: 9px;
+
+            img{
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                border: 1px solid #ececec;
+                border-radius: 50%;
+                margin-right: 15px;
+            }
+            .product-name{
+                width: calc(100% - 265px);
+                font-weight: bold;
+            }
+            .price{
+                font-size: 1.1em;
+                font-weight: bold;
+            }
+
+        }
+        .achat-item-footer{
+            display: flex;
+
+            .left-part{
+                padding-left: 15px;
+                width: calc(100% - 100px);
+
+                .label{
+                    margin-bottom: 6px;
+                }
+                button{
+                    border: 1px solid #bfbfbf;
+                    color: #222;
+                    background: white;
+                    font-size: 1.5em;
+                    width: 35px;
+                    height: 35px;
+                    border-radius: 3px;
+                }
+                .qtt{
+                    margin: 0 16px;
+                    font-weight: bold;
+                    font-size: 1.4em;
+                }
+                .form-field{
+                    width: calc(100% - 10px);
+                    margin-top: 9px;
+                }
+
+            }
+            .right-part{
+                width: 100px;
+                text-align: center;
+                color: red;
+                line-height: 57px;
+                background: rgba(255, 173, 173, 0.4);
+                border-radius: 5px;
+                height: 60px;
+                cursor: pointer;        
+            }
+        }
+    }
+
+    .outline-btn{
+        background: white;
+        border: 1px solid var(--boba-primary-500);
+        padding: 12px 29px;
+        border-radius: 4px;
+        color: var(--boba-primary-500);
+        font-weight: 600;
+        cursor: pointer;
+        margin: auto;
+        display: block;
+    }
+    
+    .outline-btn:hover{
+        background: deepskyblue;
+        color: white;
+    }
+    .outline-btn:disabled{
+        color: white!important;
+        cursor: not-allowed!important;
+        border-color: none!important;
+    }
+    .card-sidebar-footer{
+        padding: 20px 0;
+        .total{
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+    }
+    .row {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+}
+
+.qty-input {
+    width: 150px!important;
+}
+.text-lighter{
+    font-weight: normal;
+}
+.form-container{
+    background: white;
+    padding: 20px;
+}
+.m-b-20px{
+    margin-bottom: 20px;
+}
+.facture-container{
+    background: white;
+    margin: 25px auto;
+    width: 19cm;
+    line-height: 27px;
+    padding: 2cm .7cm;
+    font-size: 1em;
+
+    .text-bold{
+        font-weight: 500;
+    }
+    .divider{
+        height: 1px;
+        background: gray;
+        margin: 15px;
+    }
+    .m-l-auto{
+        margin-left: auto;
+    }
+    table.m-l-auto td{
+        padding-left: 24px;
+    }
+    .text-xl{
+        font-size: 1.2em;
+        margin: 25px 0;
+    }
+    .full-width{
+        width: 100%;
+
+        tr:first-child{
+            border-bottom: 1px solid gray;
+        }
+        tr:nth-child(2n) {
+            background: #ececec;
+        }
+        td, th{
+            padding: 4px 10px;
+        }
+    }
+
+    .row{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .col-12 {
+        width: 100%;
+    }
+    .col-7 {
+        width: calc(700% / 12);
+    }
+    .col-5 {
+        width: calc(500% / 12);
+    }
+
+}
+.down-button{
+    height: 36px;
+    border-radius: 3px;
+    border: none;
+    width: 36px;
+    background: var(--teal);
+    color: white;
+    outline: none;
+}
+.isoler{
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+::ng-deep {
+    ng-autocomplete, .ng-autocomplete{
+        width: auto!important;
+    }
+    .autocomplete-container{
+        box-shadow: none!important;
+
+        input{  
+            border: 1px solid #ececec!important;
+            border-radius: 2px!important;
+            font-weight: 600;
+            background: #f7f9fc!important;
+        }
+    }
+    .suggestion-container{
+        display: flex;
+        align-items: center;
+        font-size: 1.21em;
+        font-weight: 500;
+        padding: 4px 10px;
+        border-bottom: 1px solid #ececec;
+
+        img{
+            margin-right: 15px;
+            width: 50px;
+            height: 50px;
+            overflow: hidden;
+            outline: none;
+            object-fit: cover;
+        }
+    }
+}
+
+::ng-deep .dark{
+    .ngx-datatable{
+        button{
+            background: transparent!important;
+            color: #00d68f !important;
+        }
+    }
+    .outline-btn {
+        background: #222b45;
+    }
+    .mini-form {
+        background: #222b45;
+        box-shadow: 0 9px 15px 1px #181e38;
+    }
+    .form-container{
+        background: #222b45!important;
+        color: white;
+    }
+}

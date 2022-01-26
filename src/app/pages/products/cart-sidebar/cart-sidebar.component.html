@@ -1,0 +1,31 @@
+<div class="card-sidebar-container" [class.show]="isSidebarShown" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="xlarge">
+    <div class="card-sidebar-header">
+        <button class="close" (click)="toogleCartSidebar()"><nb-icon icon="close-square-outline"></nb-icon ></button><nb-icon icon="shopping-cart-outline"></nb-icon> Panier
+    </div>
+    <div class="card-sidebar-body" *ngIf="items">
+        <div class="achat-item" *ngFor="let item of items">
+            <div class="achat-item-header">
+                <img [src]="item.product.img" alt="pic">
+                <div class="product-name">{{item.product.title}}</div>
+                <div class="price">{{ item.product.bought_price * item.quantity }} Ar</div>
+            </div>
+            <div class="achat-item-footer">
+                <div class="left-part">
+                    <div class="label">Quantité</div>
+                    <button class="minus-btn" [disabled]="item.quantity <= 1" (click)="decrementQty(item.product._id)">-</button>
+                    <span class="qtt">{{item.quantity}}</span>
+                    <button class="plus-btn" (click)="incrementQty(item.product._id)">+</button>
+                </div>
+                <div class="right-part" (click)="deleteFromCart(item.product._id)">
+                    <nb-icon icon="trash-outline"></nb-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-sidebar-footer">
+        <div class="total">Total: {{ cartTotalPrice }} Ar</div>
+        <button class="outline-btn" (click)="validCart()" [disabled]="cartTotalPrice === 0">
+            <nb-icon icon="checkmark-circle-outline"></nb-icon> Confirmer les achats
+        </button>
+    </div>
+</div>

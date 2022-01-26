@@ -1,0 +1,145 @@
+@import '~@nebular/theme/styles/prebuilt/default';
+@import '~@nebular/auth/styles/all';
+@import '~@swimlane/ngx-datatable/themes/material.css';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
+@include nb-install() {
+  @include nb-theme-global();
+  @include nb-auth-global();
+};
+@import './app/@theme/dark.scss';
+@import '~animate.css/animate.min.css';
+:root{
+  --boba-secondary-500: #7DEDFF;
+  --boba-primary-500:#7C83FD;
+  --boba-primary-700:#96BAFF;
+  --boba-success-500:#88FFF7;
+
+}
+
+*::-webkit-scrollbar{
+  width: 5px;
+}
+*::-webkit-scrollbar-thumb{
+  background: linear-gradient(to left, #3099a6, #6ac8d4);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-track{
+  background: transparent;
+}
+
+.nb-theme-default [nbButton].appearance-filled.status-primary {
+  background-color: var(--boba-primary-500)!important;
+  border-color: var(--boba-primary-500)!important;
+  color: #ffffff;
+}
+.nb-theme-default [nbButton].appearance-filled[status="secondary"] {
+  background-color: var(--boba-secondary-500!important);
+  border-color: var(--boba-secondary-500!important);
+}
+
+
+::ng-deep .nb-theme-default nb-radio.status-basic .native-input:enabled:checked ~ .inner-circle {
+  background-color: #fd750d;
+}
+
+[bButton].success{
+  background-color: var(--boba-primary-500)!important;
+  color: white;
+}
+.dark .logo img{
+  filter: invert(1);
+}
+
+.layout {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif!important;
+}
+
+button{
+  outline: none !important;
+}
+
+.pretty-search{
+  width: calc(100% - 13px);
+  margin: 0 auto 20px;
+  background: white;
+  padding: 0px 20px 0 50px;
+  line-height: 38px;
+  border-radius: 10px;
+  position: relative;
+
+  .icon-container{
+    position: absolute;
+    width: 50px;
+    height: 40px;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  input{
+    line-height: 38px;
+    padding-left: 20px;
+    border: none;
+    border-left: 1px solid #dddee1;
+    outline: none;
+    width: calc(100% - 55px);
+  }
+}
+.i-modal{
+  background: white;
+  box-shadow: 0 0 25px 1px #777777;
+
+  .i-modal-header{
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: 500;
+  }
+  .i-modal-header, .i-modal-body, .i-modal-footer{
+    padding: 20px;
+    border-bottom: 1px solid #bcbcbc;
+  }
+}
+
+button[disabled]{
+  cursor: not-allowed;
+  background-color: #adadad !important;
+  color: white;
+}
+.alert-error{
+  background: #f6d7d7;
+  color: #f82d40;
+  line-height: 48px;
+  border-radius: 4px;
+  border: 1px solid #f82d40;
+  text-align: center;
+}
+.text-right{
+  text-align: right;
+}
+.text-center{
+  text-align: center;
+}
+.text-left{
+  text-align: left;
+}
+
+::ng-deep {
+  .ngx-datatable {
+    background: #fff;
+    box-shadow: 0 5px 15px 0 #d8d8d8!important;
+    border-radius: 3px!important;
+  }
+  .dark .ngx-datatable.material{
+    box-shadow: none!important;
+  }
+  .dark nb-calendar-days-names {
+    background: #222b45!important;
+  }
+  .dark nb-calendar-day-picker .day-cell.today, nb-calendar-month-picker .month-cell.today, nb-calendar-year-picker .year-cell.today {
+    background-color: #3099a6!important;
+  }
+  
+}

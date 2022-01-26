@@ -1,0 +1,49 @@
+<div class="container-fluid i-modal" [nbSpinner]="loading || !categories || !productsList" nbSpinnerStatus="primary" nbSpinnerSize="xlarge">
+    <div class="row">
+        <div class="col-sp-left">
+            <nb-card *ngIf="categories">
+                <nb-card-header>Filtrer par catégorie</nb-card-header>
+                <nb-card-body>
+                    <nb-radio-group [(ngModel)]="category" (valueChange)="filterByCategories($event)">
+                        <nb-radio value="all">Toutes catégories</nb-radio>
+                        <nb-radio *ngFor="let option of categories" [value]="option">{{ option }}</nb-radio>
+                    </nb-radio-group>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-sp-right" *ngIf="productsList">
+            <div class="pretty-search">
+                <div class="icon-container">
+                    <nb-icon icon="search-outline" (click)="filterProducts()"></nb-icon>
+                </div>
+                <input type="text" name="" id="searchInput" placeholder="Rechercher..." (keyup)="filterProducts()">
+            </div>
+            <div *ngIf="pageSize">
+                <div *ngFor="let product of productsList | paginate: { id: 'productsPagination',
+                                                                                itemsPerPage: pageSize,
+                                                                                currentPage: p }; index as i">
+                    
+                    <div class="produt-list" *ngIf="product.quantity > 0">
+                        <div class="card-item">
+                            <img [src]="product.img ? product.img : '/assets/imgs/logo.png'" alt="" class="product-img">
+                            <div class="product-name">
+                                {{ product.title }}
+                            </div>
+                            <div class="count">
+                                En stock: {{ product.quantity }}
+                            </div>
+                            <div class="select-btn">
+                                <button class="select-btn" (click)="selectElement(product)">Selectionner</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <pagination-controls id="productsPagination" previousLabel="Précédant" nextLabel="Suivant"
+                        (pageChange)="p = $event"></pagination-controls>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

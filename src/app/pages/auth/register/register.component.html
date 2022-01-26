@@ -1,0 +1,83 @@
+<div class="container-fluid">
+    <div class="form-container">
+        <h2>Créer un compte Gagest !</h2>
+        <form [formGroup]="registerForm" (ngSubmit)="submitForms()">
+            <div class="form-group">
+                <label for="">Nom de l'entreprise <sup>*</sup> </label>
+                <input type="text" formControlName="name">
+                <div class="error-container">
+                </div>
+            </div>
+            <div class="form-group" *ngIf="false">
+                <label for="">NIF  </label>
+                <input type="text" formControlName="NIF">
+                <div class="error-container">
+                </div>
+            </div>
+            <div class="form-group" *ngIf="false">
+                <label for="">STAT </label>
+                <input type="text" formControlName="STAT">
+                <div class="error-container">
+                </div>
+            </div>
+            <div class="form-group" *ngIf="false">
+                <label for="">RCS </label>
+                <input type="text" formControlName="RCS">
+                <div class="error-container">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="">Adresse <sup>*</sup> </label>
+                <input type="text" formControlName="address">
+            </div>
+            <div class="form-group">
+                <label for="">Adresse email <sup>*</sup> </label>
+                <input type="email" formControlName="email">
+            </div>
+            <div class="form-group" *ngIf="false">
+                <label for="">Tel <sup>*</sup> </label>
+                <input type="text" formControlName="phoneNumber">
+                <label for="" class="sublabel" *ngIf="false">De la form 032 32 332 32 ou +261 32 332 32</label>
+            </div>
+            <div class="form-group" *ngIf="false">
+                <label for="">Site web </label>
+                <input type="text" formControlName="website">
+                <label for="" class="sublabel" *ngIf="false">De la form 032 32 332 32 ou +261 32 332 32</label>
+            </div>
+
+            <div class="form-group">
+                <label for="">Mot de passe <sup>*</sup> </label>
+                <input type="password" formControlName="password">
+                <label for="" class="sublabel">Le mot de passe doit avoir au minimum 8 caractères</label>
+            </div>
+            <div class="form-group">
+                <label for="">Confirmer votre mot de passe <sup>*</sup> </label>
+                <input type="password" formControlName="confirmPassword">
+                <label for="" class="form-error sublabel"
+                    *ngIf="registerForm.controls['confirmPassword'].touched && registerForm.controls['password'].touched && registerForm.controls['confirmPassword'].value != registerForm.controls['password'].value">Les
+                    deux mots de passe ne correspondent pas</label>
+            </div>
+            <div class="form-group">
+                <div class="instruction">
+                    <ul>
+                        <li>Les champs avec <sup>*</sup> sont obligatoires</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <button nbButton status="primary" type="submit" class="m-auto d-block" [disabled]="!registerForm.valid" *ngIf="!loading">S'inscrire</button>
+            </div>
+            <div class="form-group">
+                <div class="instruction text-center">
+                    <a routerLink="/auth/login"> J'ai déjà un compte</a>
+                </div>
+            </div>
+            <div class="text-center m-t-50" *ngIf="loading">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="details-card"  [nbSpinner]="!product" nbSpinnerStatus="primary"
+nbSpinnerSize="xlarge">
+    <div class="container-fluid" *ngIf="product">
+        <div class="row">
+            <div class="left-part">
+                
+                <div class="description">
+                    <h5>{{product.title}}</h5>
+                </div>
+                <div class="img-container">
+                    <img [src]="product.img" alt="">
+                </div>
+            </div>
+            <div class="right-part">
+                <div class="badge" *ngIf="product.quantity <= product.stockDAlert" [class.danger]="product.quantity <= product.stockMinimum">
+                    <span *ngIf="product.quantity > product.stockMinimum">Stock d'alerte atteint</span>
+                    <span *ngIf="product.quantity <= product.stockMinimum">Stock minimum atteint</span>
+                </div>
+                <div class="description-item">
+                    <div class="item-label">
+                        Catégorie : {{product.category}}
+                    </div>
+                </div>
+                <div class="description-item">
+                    <div class="item-label">
+                        Date d'ajout : {{ product.addDate | date: "dd-MM-yyyy" }}
+                    </div>
+                </div>
+                <div class="description-item">
+                    <div class="item-label">
+                        Description :
+                    </div>
+                    <div><p>{{ product.description }}</p></div>
+                </div>
+                <div class="description-item">
+                    <div class="item-label">
+                        Code barres : 
+                    </div>
+                    <div class="text-center" #test>
+                        <ngx-barcode [bc-value]="product.barcode" [bc-display-value]="true" [bcElement]="test"></ngx-barcode>
+                    </div>
+                </div>
+                <div class="footer">
+                    <table>
+                        <tr>
+                            <td class="item-label"><span>Prix de vente</span> </td>
+                            <td> {{ product.sell_price }} Ar</td>
+                        </tr>
+                        <tr>
+                            <td class="item-label"><span>Prix d'achat :</span>  </td>
+                            <td> {{ product.bought_price}} Ar</td>
+                        </tr>
+                        <tr>
+                            <td class="item-label"><span>En stock :</span>  </td>
+                            <td> {{ product.quantity }} {{ product.unit }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+.notif-container{
+    width: 420px;
+    max-height: 385px;
+    overflow-y: auto;
+}
+.notif-item{
+    display: flex;
+    align-items: center;
+    padding: 7px 15px;
+    border-bottom: 1px solid #ececec;
+    cursor: pointer;
+    .left-side{
+        img{
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 1px solid #ececec;
+        }
+    }
+    .middle-side{
+        padding: 7px;
+        
+        .title{
+            font-weight: 500;
+        }
+        .subtitle{
+            font-size: .9;
+        }
+    }
+}
+.notif-item:hover{
+    background-color: #f1f3f9;
+}
+.textbold *{
+    font-weight: 700!important;
+}
+nb-card{
+    margin: 0;
+}
+nb-tab{
+    padding: 0 !important;
+}

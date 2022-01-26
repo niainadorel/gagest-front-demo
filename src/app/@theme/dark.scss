@@ -1,0 +1,117 @@
+.dark{
+    @import '~sweetalert2/src/variables';
+
+    $swal2-dark-theme-black: #19191a;
+    $swal2-dark-theme-white: #e1e1e1;
+    $swal2-outline-color: lighten($swal2-outline-color, 10%);
+
+    $swal2-background: $swal2-dark-theme-black;
+    $swal2-content-color: $swal2-dark-theme-white;
+    $swal2-title-color: $swal2-dark-theme-white;
+    $swal2-backdrop: rgba($swal2-dark-theme-black, .75);
+
+    // FOOTER
+    $swal2-footer-border-color: #555;
+    $swal2-footer-color: darken($swal2-content-color, 15%);
+
+    // INPUT
+    $swal2-input-color: $swal2-dark-theme-white;
+    $swal2-input-background: lighten($swal2-dark-theme-black, 10%);
+
+    // VALIDATION MESSAGE
+    $swal2-validation-message-background: lighten($swal2-dark-theme-black, 10%);
+    $swal2-validation-message-color: $swal2-dark-theme-white;
+
+    // QUEUE
+    $swal2-progress-step-background: lighten($swal2-dark-theme-black, 25%);
+
+    // COMMON VARIABLES FOR CONFIRM AND CANCEL BUTTONS
+    $swal2-button-focus-box-shadow: 0 0 0 1px $swal2-background, 0 0 0 3px $swal2-outline-color;
+
+    // TOAST
+    $swal2-toast-background: $swal2-dark-theme-black;
+    $swal2-toast-button-focus-box-shadow: 0 0 0 1px $swal2-background, 0 0 0 3px $swal2-outline-color;
+
+    @import '~sweetalert2/src/sweetalert2';
+    nb-layout .layout {
+        background-color: #151a30!important;
+        box-shadow: 0 0.5rem 1rem 0 #1a1f33 !important;
+
+    }
+
+    nb-sidebar, nb-layout-header {
+        background-color: #222b45!important;
+        a{
+            color: white !important;
+        }
+        li{
+            border-color: #1f1f1f!important;
+        }
+    }
+    nb-layout .layout .layout-container .content nb-layout-footer nav {
+        background-color: #222b45!important;
+        border-top: 1px solid #151a30!important;
+        box-shadow: 0 0.5rem 1rem 0 #1a1f33 !important;
+
+        color: white!important;
+    }
+    nb-card{
+        background-color: #222b45!important;
+        *{
+            color: white!important;
+        }
+    }
+    nb-user.size-medium .user-name{
+        color: #ffffff!important;
+    }
+
+    ngx-datatable, .datatable-header-cell{
+        background: #222b45!important;
+        color: white;
+    }
+    ngx-datatable datatable-body-cell, datatable-header-cell{
+        color: white!important;
+    }
+    datatable-body-row:hover .datatable-row-group {
+        background-color: #1d1d1d!important;
+    }
+    .ngx-datatable.material .datatable-footer .page-count {
+        color: white;
+    }
+    .ngx-datatable .datatable-footer .datatable-pager .pager a {
+        color: white!important;
+    }
+    .i-modal {
+        background: #161c2d!important;
+        box-shadow: 0 0 25px 1px #000000!important;
+        color: white!important;
+    }
+    .text-blue {
+        cursor: pointer;
+        color: #00b8ff!important!important;
+    }
+    button.input-file-container {
+        background: #222b45!important;
+    }
+    .card-item {
+        background: #222b45!important;
+    }
+    .ngx-pagination a, .ngx-pagination button {
+        color: #00bfff!important;
+    }
+    .pretty-search .icon-container {
+        color: black;
+    }
+    select{
+        background: transparent!important;
+        *{
+            color: #2a2a2a!important
+        }
+    }
+    .notif-item:hover {
+        background-color: #2d2d2d!important;
+    }
+    .autocomplete-container .not-found {
+        color: black;
+    }
+}

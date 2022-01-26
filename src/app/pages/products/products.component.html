@@ -1,0 +1,217 @@
+<div class="container-fluid" [nbSpinner]="loading || !categories || !rows" nbSpinnerStatus="primary"
+    nbSpinnerSize="xlarge">
+    <div class="row">
+        <div class="col-sp-left">
+            <button nbButton fullWidth (click)="openProductsDialog()">
+                <nb-icon icon="plus-outline"></nb-icon> Nouveau Produit
+            </button>
+            <button class="input-file-container" *ngIf="user.typeAccount > 1">
+                <div class="placeholder">
+                    <nb-icon icon="download-outline"></nb-icon>
+                    Importer fichier excel
+                </div>
+                <input type="file" (change)="onFileChange($event)">
+            </button>
+            <button *ngIf="rows && rows.length && user.typeAccount > 1" (click)="exportToExcel()" class="input-file-container">
+                <div class="placeholder">
+                    <nb-icon icon="upload-outline"></nb-icon>
+                    Exporter vers excel
+                </div>
+            </button>
+            <nb-card *ngIf="categories">
+                <nb-card-header>Filtrer par catégorie</nb-card-header>
+                <nb-card-body>
+                    <nb-radio-group [(ngModel)]="category" (valueChange)="filterByCategories($event)">
+                        <nb-radio value="all">Toutes catégories</nb-radio>
+                        <nb-radio *ngFor="let option of categories" [value]="option">{{ option }}</nb-radio>
+                    </nb-radio-group>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-sp-right" *ngIf="!ajustExel">
+            <div class="pretty-search">
+                <div class="icon-container">
+                    <nb-icon icon="search-outline" (click)="filterProducts()"></nb-icon>
+                </div>
+                <input type="text" placeholder="Filtrer..." (keyup)="updateFilter($event)">
+            </div>
+            <ngx-datatable #productTable class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+                [rowHeight]="50" [sorts]="sorts" [limit]="10" [class.show]="isSidebarShown" [nbSpinner]="false"
+                nbSpinnerStatus="primary" nbSpinnerSize="xlarge" *ngIf="!onRecalculate">
+                <ngx-datatable-column name="Image" prop="img" [width]="120">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <img [src]="row.img ? row.img : '/assets/imgs/logo.png'" alt="">
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Nom du produit" prop="title"  [width]="200">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        
+                        <strong class="word-wrap">{{row.title}}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Prix d'achat" prop="bought_price">
+                    <ng-template let-row="row" ngx-datatable-cell-template >
+                        <strong class="d-block">{{row.bought_price | price:'Ar'}}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Prix de vente" prop="sell_price" [flexGrow]="3">
+                    <ng-template let-row="row" ngx-datatable-cell-template >
+                        <strong class="d-block">{{row.sell_price  | price:'Ar'}}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Quantité" prop="quantity" [flexGrow]="3">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <strong class="quantity-button"
+                        [class.alert]="row.stockDAlert && row.quantity <= row.stockDAlert"
+                        [class.danger]="row.stockMinimum && row.quantity <= row.stockMinimum">{{ row.quantity}}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Unité" prop="unit" [flexGrow]="3">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <strong>{{ row.unit}}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Details" [width]="120">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button class="icon-only" (click)="goToDetail(row._id)">
+                            <nb-icon icon="eye-outline"></nb-icon>
+                        </button>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Actions" [width]="200">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button class="icon-only" (click)="openEditProductsDialog(row, row.globalId)">
+                            <nb-icon icon="edit-outline"></nb-icon>
+                        </button>
+                        <button class="icon-only text-danger" [swal]="deleteSwal" (confirm)="deleteProduct(row)">
+                            <nb-icon icon="trash-outline"></nb-icon>
+                        </button>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+        <div class="col-sp-right" *ngIf="ajustExel && !exportsExel">
+            <div class="white-back">
+                <div class="success-alert">
+                    <nb-icon icon="checkmark-outline"></nb-icon> Fichier importé avec succès
+                </div>
+                <div class="m-form">
+                    <div class="form-header">
+                        <nb-icon icon="question-mark-circle-outline"></nb-icon>
+                        Veuillez indiquer les colonnes correspondant à ces champs
+                    </div>
+                    <form [formGroup]="productsForm">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="relative form-field">
+                                        <label>Nom du produit</label>
+                                        <input type="text" formControlName="title" nbInput fullWidth fieldSize="large"
+                                            placeholder=".........">
+                                    </div>
+                                    <div class="relative form-field" *ngIf="!newCategorie">
+                                        <label>Catégorie du produit</label>
+                                        <input type="text" formControlName="category" nbInput fullWidth fieldSize="large"
+                                        placeholder=".........">
+                                    </div>
+                                    <div class="relative form-field" *ngIf="newCategorie">
+                                        <label>Catégorie du produit</label>
+                                        <input type="text" placeholder="Nouvelle catégorie" nbInput fullWidth formControlName="category">
+                                    </div>
+                                    <div class="relative form-field">
+                                        <label>Description du produit</label>
+                                        <input type="text" formControlName="description" nbInput fullWidth fieldSize="large"
+                                        placeholder=".........">
+                                    </div>
+                                    <div class="relative form-field">
+                                        <label for="">Quantité</label>
+                                        <input type="text" formControlName="quantity" nbInput fullWidth fieldSize="large"
+                                            placeholder=".........">
+                                    </div>
+                                    <div class="relative form-field">
+                                        <label for="">Unité</label>
+                                        <input type="text" formControlName="unit" nbInput fullWidth fieldSize="large"
+                                            placeholder=".........">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="relative form-field">
+                                        <label for="">Prix d'achat</label>
+                                        <input type="text" formControlName="bought_price" nbInput fullWidth fieldSize="large"
+                                            placeholder=".........">
+                                    </div>
+                                    <div class="relative form-field">
+                                        <label for="">Prix de vente </label>
+                                        <input type="text" formControlName="sell_price" nbInput fullWidth fieldSize="large"
+                                            placeholder=".........">
+                                    </div>
+                                    <div class="relative form-field">
+                                        <button nbButton status="primary"
+                                        [disabled]="!productsForm.valid" (click)="generateProducts()">Valider</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sp-right" *ngIf="ajustExel && exportsExel">
+            <div class="step">
+                <div class="step-header">
+                    <div class="icon-indicator">
+                        <nb-icon icon="checkmark-square-2-outline" class="text-success" *ngIf="exportsStep.step1 === 'done'"></nb-icon>
+                        <nb-icon icon="square-outline"class="text-gray" *ngIf="exportsStep.step1 === 'undone'"></nb-icon>
+                    </div> 
+                    <div class="text-indicator">
+                        Préparation des produits
+                    </div>
+                    <div class="loading-indicator" [nbSpinner]="exportsInprogress === 'step1'" nbSpinnerStatus="primary"></div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-header">
+                    <div class="icon-indicator">
+                        <nb-icon icon="checkmark-square-2-outline" class="text-success" *ngIf="exportsStep.step2 === 'done'"></nb-icon>
+                        <nb-icon icon="square-outline"class="text-gray" *ngIf="exportsStep.step2 === 'undone'"></nb-icon>
+                    </div> 
+                    <div class="text-indicator">
+                        Enregistrement des produits
+                    </div>
+                    <div class="loading-indicator" [nbSpinner]="exportsInprogress === 'step2'" nbSpinnerStatus="primary"></div>
+                </div>
+                <div class="step-body" *ngIf="exportsStatus">
+                    <p>{{ exportsStatus }}</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-header">
+                    <div class="icon-indicator">
+                        <nb-icon icon="checkmark-square-2-outline" class="text-success" *ngIf="exportsStep.step3 === 'done'"></nb-icon>
+                        <nb-icon icon="square-outline"class="text-gray" *ngIf="exportsStep.step3 === 'undone'"></nb-icon>
+                    </div> 
+                    <div class="text-indicator">
+                        Enregistrement des catégories
+                    </div>
+                    <div class="loading-indicator" [nbSpinner]="exportsInprogress === 'step3'" nbSpinnerStatus="primary"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<swal #errorSwal title="Erreur" icon="warning"
+    text=""
+    confirmButtonText="Ok">
+</swal>
+
+<swal
+    #deleteSwal
+    title="Confirmer la suppression"
+    icon="question"
+    [showCancelButton]="true"
+    [reverseButtons]="true"
+    confirmButtonText="Oui"
+    cancelButtonText="Non"
+></swal>

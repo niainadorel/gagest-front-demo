@@ -1,0 +1,403 @@
+.container-fluid{
+    min-height: calc(100vh - 200px);
+}
+
+.col-sp-left{
+    width: 220px;
+    button{
+        margin-bottom: 20px;
+    }
+}
+.col-sp-right{
+    width: calc(100% - 220px);
+    padding-left: 20px;
+
+    .row{
+        margin-left: 0!important;
+        margin-right: 0!important;
+    }
+}
+.select-all{
+
+    .list-item{
+        display: flex;
+        border-radius: 5px;
+        background: white;
+        padding: 10px 15px;
+        width: calc(100% - 15px);
+        margin: 0 auto 20px;
+        max-width: 300px;
+        box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
+
+        .text-container{
+            margin-left: 5px;
+        }
+    }
+}
+.selectedItemsFeatures{
+    margin: 15px;
+    display: none;
+    justify-content: center;
+    .list-item{
+        display: flex;
+        border-radius: 5px;
+        background: white;
+        padding: 10px 15px;
+        margin: 5px 10px;
+        box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
+        cursor: pointer;
+    }
+
+    .icon-container{
+        margin-right: 11px;
+    }
+    .list-item.delete{
+        .icon-container{
+            color: red;
+        }
+    }
+    .list-item.add-to-cart{
+        .icon-container{
+            color: deepskyblue;
+        }
+    }
+}
+.selectedItemsFeatures.show{
+    display: flex;
+    opacity: 1;
+    transform: translateY(0px);
+}
+.col-sp-card{
+    width: 33.33333%;
+}
+.mini-product-card{
+    background: white;
+    width: calc(100% - 15px);
+    margin: 0 auto 20px;
+    max-width: 300px;
+    box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
+    border-radius: 5px;
+
+    .m-body{
+        height: 150px;
+        padding: 15px;
+        text-align: center;
+        position: relative;
+
+        .more-items {
+            position: absolute;
+            right: 10px;
+            top: 15px;
+        }
+        .checkbox-item{
+            display: inline-block;
+            position: absolute;
+            top: 16px;
+            left: 15px;
+            *{
+                cursor: pointer!important;
+            }
+        }
+        img{
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+    .m-footer{
+        padding: 15px;
+        border-top: 1px solid #f8f8f8;
+        overflow: hidden;
+        position: relative;
+
+        .info{
+            display: flex;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            line-height: 1.5rem;
+
+            .title{
+                width: 60%;
+                color: #4b4b4b;
+            }
+            .w-40pc{
+                width: 40% !important;
+            }
+            .w-60pc{
+                width: 60% !important;
+            }
+            .price{
+                color: red;
+                width: 40%;
+                text-align: right;
+            }
+        }
+        .quantity {
+            display: flex;
+            line-height: 40px;
+            justify-content: space-between;
+            margin-top: 5px;
+            padding: 0 15px;
+            border-radius: 5px;
+
+            .m-label{
+                font-weight: 500;
+            }
+            .quantity-number{
+                text-align: right;
+                font-weight: 600;
+                font-size: 20px;
+            }
+        }
+        .quantity.success{
+            background: rgba(3, 169, 244, 0.12);
+            color: rgb(3, 169, 244);
+        }
+        .quantity.warning{
+            background: rgba(255, 193, 7, 0.12);
+            color: rgb(255, 193, 5);
+        }
+        .quantity.danger{
+            background: rgba(244, 67, 54, 0.13);
+                color: #F44336;
+        }
+
+        .more-details-container{
+            display: flex;
+            position: absolute;
+            width: 100%;
+            background: linear-gradient(to top, white, #ffffffc4);
+            left: 0;
+            height: 55px;
+            justify-content: center;
+            align-items: center;
+            transition: .3s ease-in;
+            bottom: -75px;
+            button{
+                background: white;
+                border: 1px solid deepskyblue;
+                padding: 12px 29px;
+                border-radius: 4px;
+                color: deepskyblue;
+                font-weight: 600;
+            }
+            button:hover{
+                background: deepskyblue;
+                color: white;
+            }
+        }
+        .more-details-container:hover{
+            bottom: 0px !important;
+        }
+    }
+}
+.mini-product-card:hover{
+
+    .more-details-container{
+        bottom: 0px !important;
+    }
+}
+
+::ng-deep nb-checkbox *{
+    cursor: pointer;
+}
+::ng-deep nb-spinner{
+    background-color: rgb(237, 241, 247)!important;
+    span{
+        width: 100px!important;
+        height: 100px!important;
+        border-width: 0.225em!important;
+    }
+}
+::ng-deep .loading-indicator nb-spinner{
+    background-color: white!important;
+    span{
+        width: 40px!important;
+        height: 40px!important;
+        border-width: 0.125em!important;
+    }
+}
+ngx-datatable{
+
+    img{
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+    }
+    button.icon-only{
+        width: 45px;
+        color: #555;
+        border: none;
+        background: white;
+        border: 1px solid #ececec;
+        border-radius: 3px;
+        height: 32px;
+        margin: 0px 5px;
+    }
+    .quantity-button{
+        display: block;
+        border-radius: 5px;
+        padding: 0 5px;
+        margin: 5px 0;
+        line-height: 40px;
+    }
+    .quantity-button.alert{
+        background: #ffff98;
+        font-weight: 800;
+        color: black!important;
+
+    }
+    .quantity-button.danger{
+        background: rgba(255, 0, 0, 0.23137254901960785);
+        color: red;
+        font-weight: 800;
+    
+    }
+}
+
+button.input-file-container{
+    width: 100%;
+    border: none;
+    color: #28a745;
+    border-radius: 4px;
+    background: white;
+    position: relative;
+    line-height: 37px;
+    font-size: 1em;
+    font-weight: 600;
+    overflow: hidden;
+
+    input{
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+}
+
+.success-alert{
+    border: 1px solid var(--green);
+    background: white;
+    line-height: 48px;
+    text-align: center;
+    margin: 0px auto 10px;
+    border-radius: 24px;
+    display: table;
+    padding: 0 33px;
+    color: var(--green);
+}
+
+.form-header{
+    text-align: center;
+    font-size: 1.5em;
+    margin: 30px 0 30px;
+}
+form{
+    padding: 20px;
+    background: white;
+    max-width: 600px;
+    margin: auto;
+
+    .form-field{
+        margin: 8px 0;
+    }
+
+    button{
+        margin: auto;
+        display: block;
+    }
+}
+.info{
+    line-height: 48px;
+    text-align: center;
+    font-weight: 600;
+}
+.step{
+    width: 400px;
+    background: white;
+    border-radius: 4px;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    .step-header{
+        display: flex;
+        width: 100%;
+        line-height: 48px;
+        align-items: center;
+        // padding: 0 15px;
+
+        .icon-indicator nb-icon{
+            width: 50px;
+            height: 35px;
+            position: relative;
+            top: -5px;
+        }
+        .loading-indicator{
+            width: 50px;
+            height: 48px;
+            margin-left: auto;
+
+            .text-gray{
+                color: gray;
+            }
+            .text-success{
+                color: var(--success);
+            }
+        }
+
+    }
+    .step-body{
+        padding: 15px;
+    }
+}
+.flex.center{
+    height: 48px;
+    display: flex;
+    align-items: center;
+    max-height: 48px;
+    overflow-y: auto;
+}
+::ng-deep{
+    datatable-header-cell:nth-child(2),
+    datatable-header-cell:nth-child(3), 
+    datatable-header-cell:nth-child(4)
+    {
+        text-align: right;
+    }
+}
+
+::ng-deep .ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{
+    padding: 0 .9em!important;
+    line-height: 50px;
+    border-bottom: 1px solid #ececec;
+}
+::ng-deep {
+    .ngx-datatable.material {
+      background: #fff;
+      box-shadow: 0 5px 15px 0 #d8d8d8!important;
+      border-radius: 3px!important;
+    }
+    .dark .ngx-datatable.material{
+        box-shadow: none!important;
+    }
+    .ngx-datatable.material .datatable-header .datatable-header-cell {
+        text-align: left;
+        padding: 0.9rem .9rem;
+    }
+}
+::ng-deep nb-spinner{
+    background-color: #e0e0e0b3 !important;
+    span{
+        width: 60px!important;
+        height: 60px!important;
+        border-width: 0.225em!important;
+    }
+}
+
+::ng-deep .dark .m-form{
+    color: white;
+    form{
+        background: #222b45!important;
+    }
+}

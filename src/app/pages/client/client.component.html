@@ -1,0 +1,114 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <button nbButton status="primary" (click)="openNewClientDialog()">+ Nouveau client</button>
+                    </div>
+                    <div class="col-8">
+                        <div class="pretty-search">
+                            <div class="icon-container">
+                                <nb-icon icon="search-outline"></nb-icon>
+                            </div>
+                            <input type="text" name="" id="searchInput" placeholder="Filter..." (keyup)="updateFilter($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ngx-datatable #clientTable class="material" [rows]="rows" [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50"
+                [rowHeight]="50" [sorts]="sorts" [limit]="10" [class.show]="isSidebarShown" [nbSpinner]="loading"
+                nbSpinnerStatus="primary" nbSpinnerSize="xlarge">
+                <ngx-datatable-column name="Logo" prop="img" [flexGrow]="2">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <img [src]="row.img" alt="">
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Nom de l'entreprise" prop="name" [flexGrow]="4">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <strong>{{row.name}}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Connecté" prop="connected" [flexGrow]="2">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <strong class="d-block text-center">
+                            <nb-icon status="success" icon="checkmark-outline" *ngIf="row.connected"></nb-icon>
+                            <nb-icon status="danger" icon="close-outline" *ngIf="!row.connected"></nb-icon>
+                        </strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Status du compte" prop="status" [flexGrow]="3">
+                    <ng-template let-row="row" ngx-datatable-cell-template class="text-right">
+                        <select  [class]="row.status" [value]="row.status" (change)="updateStatus($event.target.value, row._id, row.globalId)">
+                            <option value="enabled">Activé</option>
+                            <option value="disabled">Desactivé</option>
+                        </select>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Editer" [flexGrow]="3">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button class="icon-only" (click)="openEditClientDialog(row, row.globalId)">
+                            <nb-icon icon="edit-outline"></nb-icon>
+                        </button>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Details" [flexGrow]="3">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button class="icon-only" (click)="showDetails(row)">
+                            <nb-icon icon="eye-outline"></nb-icon>
+                        </button>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+        <div class="col-4">
+            <div class="user-details-card" *ngIf="inShowDetail">
+                <div class="card-header">
+                    <div class="left-part">
+                        <div class="img-container">
+                            <img [src]="inShowDetail.img" alt="">
+                        </div>
+                        <div bButton class="status success" *ngIf="inShowDetail.status === 'enabled' ">
+                            Activé
+                        </div>
+                        <div bButton class="status danger" *ngIf="inShowDetail.status === 'disabled' ">
+                            Desactivé
+                        </div>
+                    </div>
+                    <div class="right-part">
+                        <h4>{{ inShowDetail.name }}</h4>
+                        <h4>{{ inShowDetail.address}}</h4>
+                        <h4><nb-icon icon="phone-outline"></nb-icon> : {{ inShowDetail.phoneNumber}}</h4>
+                        <h4><nb-icon icon="email-outline"></nb-icon> : {{ inShowDetail.email}}</h4>
+                        <h4 *ngIf="inShowDetail.website"><nb-icon icon="browser-outline"></nb-icon> {{ inShowDetail.website}}</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="list-item">
+                        NIF : {{inShowDetail.NIF}}
+                    </div>
+                    <div class="list-item">
+                        STAT : {{ inShowDetail.STAT}}
+                    </div>
+                    <div class="list-item">
+                        RCS : {{ inShowDetail.RCS}}
+                    </div>
+                    <div class="list-item">
+                        Responsable : {{ inShowDetail.responsable}}
+                    </div>
+
+                    <div class="account-info success" bButton>
+                        <div class="list-item">
+                            <label>Identifiant</label>
+                            <div class="value">{{ inShowDetail.username }}</div>
+                        </div>
+                        <div class="list-item">
+                            <label>Mot de passe </label>
+                            <div class="value">{{ inShowDetail.password }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

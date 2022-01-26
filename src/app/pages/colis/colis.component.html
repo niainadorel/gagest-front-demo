@@ -1,0 +1,124 @@
+<button class="outline-btn" (click)="inAdd = !inAdd">Nouveau colis</button>
+<div class="mini-form" *ngIf="inAdd" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="xlarge">
+  <div class="form-header">
+    <button nbButton status="secondary" class="d-block m-auto" (click)="openColisDialog()">Sélectionner un
+      produit</button>
+  </div>
+  <div class="mini-presentation container-fluid" *ngIf="selectedProduct">
+    <div class="row">
+      <div class="left-part">
+        <img [src]="selectedProduct.img" alt="">
+      </div>
+      <div class="right-part">
+        <div class="product-name">{{ selectedProduct.title}}</div>
+        <div>Prix d'achat : <span class="big-text">{{ selectedProduct.bought_price}} Ar</span></div>
+        <div>En stock : <span class="big-text">{{selectedProduct.quantity }} {{selectedProduct.unit}}</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="label">Quantité <span *ngIf="selectedProduct"> en {{ selectedProduct.unit }}</span></div>
+    <input type="number" min="0" placeholder="Quantité..." [(ngModel)]="quantity">
+  </div>
+  <div class="text-center m-b-15" *ngIf="selectedProduct">
+    Prix total : <span class="big-text">{{ selectedProduct.bought_price * quantity}} Ar</span>
+  </div>
+  <div class="form-group">
+    <div class="label">Sens</div>
+    <select [(ngModel)]="sens">
+      <option value="entry"><b>Entrant</b> </option>
+    </select>
+  </div>
+  <div class="form-group">
+    <div class="label">Localisation du colis à l'heure actuel</div>
+    <input type="text" [(ngModel)]="localisation" placeholder="........">
+  </div>
+  <div class="form-group">
+    <div class="label">Date prévue pour arriver au déstination</div>
+    <input [nbDatepicker]="datepicker" [(ngModel)]="supposedArrivalDate">
+    <nb-datepicker #datepicker></nb-datepicker>
+  </div>
+
+
+  <button nbButton status="primary" (click)="addColis()"
+    [disabled]="!selectedProduct || !sens || !localisation || !supposedArrivalDate || quantity < 1">Terminer</button>
+</div>
+<div class="container-fluid" *ngIf="!inAdd">
+  <div class="row">
+    <div class="col-12">
+      <div class="pretty-search">
+        <div class="icon-container">
+          <nb-icon icon="search-outline"></nb-icon>
+        </div>
+        <input type="text" placeholder="Rechercher..." (keyup)="updateFilter($event)">
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-datatable #colisTable class="material" [rows]="rows" [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50"
+  [rowHeight]="50" [sorts]="sorts" [class.show]="isSidebarShown" [nbSpinner]="loading" nbSpinnerStatus="primary"
+  nbSpinnerSize="xlarge" *ngIf="!inAdd">
+  <ngx-datatable-column name="Image" [flexGrow]="2">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <img [src]="row.img" alt="">
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Nom du produit" prop="title" [flexGrow]="4">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <strong>{{row.title}}</strong>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Quantité" prop="quantity" [flexGrow]="2">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <strong>{{row.quantity}}</strong>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Prix" prop="totalPrice" [flexGrow]="3">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <strong>{{row.bought_price * row.quantity}} Ar</strong>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Date d'ajout" prop="addDate" [flexGrow]="3">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{row.addDate | date: "dd/MM/yyyy"}}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Sens" prop="sens" [flexGrow]="2">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <strong>
+        <nb-icon [icon]="row.sens === 'entry' ? 'trending-down-outline' : 'trending-up-outline'"></nb-icon>
+      </strong>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Localisation" prop="localisation" [flexGrow]="3">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <div class="localisation" (click)="edit(row)">{{row.localisation}} <div class="icon-container">
+          <nb-icon icon="edit-outline"></nb-icon>
+        </div>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Date d'arrivage" prop="supposedArrivalDate" [flexGrow]="3">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{row.supposedArrivalDate | date: "dd/MM/yyyy"}}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Arrivé" prop="done" [flexGrow]="2">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <button nbButton status="success" (click)="openConfirm(row)" *ngIf="!row.done">
+        <nb-icon icon="square-outline"></nb-icon>
+      </button>
+      <button class="text-success" *ngIf="row.done">
+        <nb-icon icon="checkmark-square-outline"></nb-icon>
+      </button>
+    </ng-template>
+  </ngx-datatable-column>
+
+</ngx-datatable>
+<swal #editSwal title="Modification" text="Entrer la nouvelle localisation" icon="warning" [showCancelButton]="true"
+  [reverseButtons]="true" confirmButtonText="Valider" cancelButtonText="Annuler" input="text">
+</swal>
+
+<swal #confirmSwal title="Confirmer l'arrivage " text="En confirmant, une entrée correspondante sera crée" icon="question" [showCancelButton]="true"
+  [reverseButtons]="true" confirmButtonText="Confirmer" cancelButtonText="Annuler">
+</swal>

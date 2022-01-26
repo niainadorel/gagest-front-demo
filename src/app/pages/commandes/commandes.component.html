@@ -1,0 +1,63 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="container">
+                <div class="row">
+                    <div class="col-10">
+                        <div class="pretty-search">
+                            <div class="icon-container">
+                                <nb-icon icon="search-outline"></nb-icon>
+                            </div>
+                            <input type="text" name="" id="searchInput" placeholder="Filter..." (keyup)="updateFilter($event)">
+                        </div>
+                    </div>
+                    <div class="col-2" *ngIf="refresh">
+                        <button nbButton status="primary" (click)="refreshFunc()">
+                            <nb-icon icon="refresh-outline"></nb-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <ngx-datatable #commandeTable class="material" [rows]="rows" [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50"
+                [rowHeight]="50" [sorts]="sorts" [limit]="10" [class.show]="isSidebarShown" [nbSpinner]="loading"
+                nbSpinnerStatus="primary" nbSpinnerSize="xlarge">
+                <ngx-datatable-column name="Logo" prop="img" [flexGrow]="2">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <img [src]="row.client.img" alt="">
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Nom du client" prop="row.client.name" [flexGrow]="4">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <strong>{{row.client.name}}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Date d'ajout" prop="addDate" [flexGrow]="4">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{fromNow(row.addDate)}}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Prix total" prop="totalPrice" [flexGrow]="4">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                           <strong>{{row.totalPrice}} Ar</strong> 
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Status de la commande" prop="status" [flexGrow]="5">
+                    <ng-template let-row="row" ngx-datatable-cell-template class="text-right">
+                        <select [class]="row.status" [value]="row.status" (change)="updateStatus($event.target.value, row, row.globalId)">
+                            <option value="pending" *ngIf="row.status === 'pending'">En attente</option>
+                            <option value="inDelivering" *ngIf="row.status !== 'delivered'">En cours de livraison</option>
+                            <option value="delivered">Livrés</option>
+                        </select>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Details" [flexGrow]="3">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button class="icon-only" (click)="showDetails(row)">
+                            <nb-icon icon="eye-outline"></nb-icon>
+                        </button>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div>
+</div>

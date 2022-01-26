@@ -1,0 +1,45 @@
+<nb-layout *ngIf="user && user.name">
+    <nb-layout-header fixed>
+        <div class="header-container">
+            <div class="logo-container">
+                <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+                    <nb-icon icon="menu-2-outline"></nb-icon>
+                </a>
+                <a class="logo" href="#" (click)="navigateHome()"><img src="assets/imgs/logo.png" alt="" srcset=""></a>
+            </div>
+        </div>
+        <nb-toggle [(ngModel)]="themeToggle" (change)="changeTheme()">Dark</nb-toggle>
+        <div class="header-container m-l-auto">
+            <nb-actions size="small">
+                <nb-action class="control-item" size="medium" icon="bell-outline" nbPopoverPlacement="bottom"
+                    [nbPopover]="notificationTemplate" [badgeText]="notificationsLength" badgeStatus="danger"
+                    badgePosition="top right"></nb-action>
+                <nb-action class="control-item" icon="log-out-outline" [swal]="confirmSwal"></nb-action>
+                <nb-action class="control-item" icon="lock-outline" (click)="openPasswordDialog()"></nb-action>
+                <nb-action class="user-action pointer" (click)="openUserDialog()">
+                    <nb-user [onlyPicture]="false" [name]="user.name" [picture]="user.picture">
+                    </nb-user>
+                </nb-action>
+            </nb-actions>
+        </div>
+    </nb-layout-header>
+    <nb-layout-footer>&copy; Copyright GaGest.io</nb-layout-footer>
+    <nb-layout-column>
+        <router-outlet></router-outlet>
+    </nb-layout-column>
+    <nb-sidebar>
+        <nb-menu tag="menu" [items]="menuItems"></nb-menu>
+    </nb-sidebar>
+</nb-layout>
+<swal #confirmSwal title="Se deconnecter ?" icon="question" [showCancelButton]="true" [reverseButtons]="true"
+    confirmButtonText="Oui" cancelButtonText="Non" (confirm)="logout()">
+</swal>
+
+<swal #disconnectOrderSwal title="Votre compte a été désactivé" icon="warning"
+    confirmButtonText="Ok"  (close)="logout()">
+</swal>
+
+
+<ng-template #notificationTemplate>
+    <app-notification></app-notification>
+</ng-template>

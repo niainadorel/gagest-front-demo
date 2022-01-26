@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    <div class="form-container animate__animated animate__fadeInUp animate__fast">
+        <div class="forms-content">
+            <h2>Identifiez-vous ! </h2>
+            <form [formGroup]="loginForm" (ngSubmit)="submitForms()">
+                
+                <div class="form-group">
+                    <label for="">Adresse email</label>
+                    <input type="email" formControlName="email" (focus)="invalid = false">
+                </div>
+                <div class="form-group">
+                    <label for="">Mot de passe</label>
+                    <input type="password" formControlName="password" (focus)="invalid = false">
+                </div>
+                <div class="form-group" *ngIf="invalid && error === 'NOT_EXIST'">
+                    <div class="instruction">
+                        <div class="alert-error">
+                            Identifiant invalide !
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="invalid && error === 'DISABLED'">
+                    <div class="instruction">
+                        <div class="alert-error">
+                            Ce compte est inactif !
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" [disabled]="!loginForm.valid" *ngIf="!loading">Se connecter</button>
+                </div>
+                <div class="text-center m-t-50" *ngIf="loading">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="instruction text-center">
+                        <a routerLink="/auth/register"> J'ai pas de compte et je compte en créer</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="background">
+            <img src="assets/imgs/login-background.jpg" alt="">
+            <div class="mask">
+                <img src="assets/imgs/logo.png" alt="">
+            </div>
+        </div>
+
+    </div>
+</div>

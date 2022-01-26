@@ -1,0 +1,119 @@
+.i-modal{
+    min-width: 900px;
+    max-width: 95vw;
+    max-height: 95vh;
+    overflow-y: auto;
+    transform: scale(.9);
+}
+select{
+    padding-left: 15px;
+    width: 100%;
+    background: #f7f9fc;
+    display: block;
+    height: 44px;
+    border: 1px solid #ececec;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.divider{
+    height: 1px;
+    background: #ececec;
+    margin: 47px;
+}
+.text-blue{
+    color: blue !important;
+    cursor: pointer;
+}
+.picture-container{
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 160px;
+    width: 160px;
+    position: relative;
+    margin: auto;
+    input{
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
+    .relative{
+        border-radius: 5px;
+        height: 100%;
+        margin: auto;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        width: 160px;
+
+        nb-icon{
+            font-size: 75px;
+            position: absolute;
+        }
+        .mask{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: rgba(0, 0, 0, 0.19);
+        }
+    }
+    .relative:hover{
+        .mask{
+            display: block;
+        }
+        nb-icon{
+            color: white;
+            display: block;
+        }
+    }
+    img{
+        border-radius: 4px;
+        margin: 10px auto;
+        display: block;
+        width: 225px;
+        height: 225px;
+        object-fit: cover;
+    }
+}
+input{
+    margin: 8px 0px;
+}
+
+button[status="red"] {
+    background-color: red;
+    color: white;
+    border-color: red;
+}
+.hide{
+    display: none;
+}
+
+.indication{
+    color: #ac0002;
+    text-align: center;
+    margin: 0 0 20px;
+
+    span{
+        color: blue;
+        cursor: pointer;
+    }
+    span:hover{
+        text-decoration: underline;
+    }
+}
+
+::ng-deep nb-spinner{
+    background-color: #e0e0e0b3 !important;
+    span{
+        width: 40px!important;
+        height: 40px!important;
+        border-width: 0.225em!important;
+    }
+}
